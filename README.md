@@ -1,4 +1,4 @@
-# MadBot Discord Bot
+# Fenix Discord Bot
 
 A Discord bot for managing server access and roles with advanced security features.
 
@@ -20,8 +20,8 @@ A Discord bot for managing server access and roles with advanced security featur
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/madBot.git
-cd madBot
+git clone https://github.com/yourusername/fenixBot.git
+cd fenixBot
 ```
 
 2. Install dependencies:
