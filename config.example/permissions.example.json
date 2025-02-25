@@ -1,0 +1,85 @@
+{
+  "adminConfig": {
+    "rolesTotal": ["ADMIN", "MODERATOR", "HELPER", "USER", "BOT"],
+    "log channel": "CHANNEL_ID_HERE",
+    "adminRole": "ADMIN",
+    "codes": [
+      {
+        "code": "EXAMPLE_CODE",
+        "roles": ["HELPER"]
+      }
+    ]
+  },
+  "commands": {
+    "ban": {
+      "roles": ["ADMIN"],
+      "description": "Ban a user from the server",
+      "public": false,
+      "reply": true,
+      "cooldown": {
+        "duration": 5,
+        "type": "user",
+        "usages": 1
+      }
+    },
+    "unban": {
+      "roles": ["ADMIN"],
+      "description": "Unban a user from the server",
+      "public": false,
+      "reply": true,
+      "cooldown": {
+        "duration": 5,
+        "type": "user",
+        "usages": 1
+      }
+    },
+    "purge": {
+      "roles": ["ADMIN", "MODERATOR"],
+      "description": "Delete multiple messages at once (max 100)",
+      "public": false,
+      "reply": false,
+      "cooldown": {
+        "duration": 10,
+        "type": "channel",
+        "usages": 1
+      }
+    },
+    "timeout": {
+      "roles": ["ADMIN", "MODERATOR"],
+      "description": "Timeout a user for a specified duration",
+      "public": false,
+      "reply": true,
+      "cooldown": {
+        "duration": 5,
+        "type": "user",
+        "usages": 1
+      }
+    },
+    "help": {
+      "roles": [],
+      "description": "Show all available commands and their descriptions",
+      "public": true,
+      "reply": true,
+      "cooldown": {
+        "duration": 5,
+        "type": "user",
+        "usages": 3
+      }
+    }
+  },
+  "_documentation": {
+    "commands": {
+      "properties": {
+        "roles": "Array of roles that can use this command",
+        "description": "Description shown in help command",
+        "public": "Whether this command can be used by anyone (true) or only specified roles (false)",
+        "reply": "Whether the bot should reply to the command (true) or not (false)",
+        "cooldown": {
+          "duration": "Cooldown duration in seconds",
+          "type": "Type of cooldown: 'user' (per user), 'channel' (per channel), etc.",
+          "usages": "Number of times the command can be used before cooldown is triggered"
+        }
+      }
+    }
+  }
+}

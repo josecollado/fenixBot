@@ -5,7 +5,6 @@
 
 # Config files
 /config/*
-!/config/example.permissions.json
 
 # Dependency directories
 node_modules/
