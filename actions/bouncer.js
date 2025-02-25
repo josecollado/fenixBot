@@ -5,7 +5,8 @@ import {
     EmbedBuilder,
     ModalBuilder,
     TextInputBuilder,
-    TextInputStyle
+    TextInputStyle,
+    InteractionResponseFlags
 } from 'discord.js';
 import { readFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
@@ -135,7 +136,7 @@ export async function handleBouncerButton(interaction) {
                 const suitsResult = await assignRoles(interaction.member, ['SUITS']);
                 await interaction.reply({
                     content: suitsResult.message,
-                    ephemeral: true
+                    flags: InteractionResponseFlags.Ephemeral
                 });
                 break;
 
@@ -143,7 +144,7 @@ export async function handleBouncerButton(interaction) {
                 const cryptoResult = await assignRoles(interaction.member, ['CRYPTO']);
                 await interaction.reply({
                     content: cryptoResult.message,
-                    ephemeral: true
+                    flags: InteractionResponseFlags.Ephemeral
                 });
                 break;
 
@@ -154,14 +155,14 @@ export async function handleBouncerButton(interaction) {
             default:
                 await interaction.reply({
                     content: 'ERROR CONTACT DEV',
-                    ephemeral: true
+                    flags: InteractionResponseFlags.Ephemeral
                 });
         }
     } catch (error) {
         logger.error('Button interaction error:', { error: error.message });
         await interaction.reply({
             content: 'ERROR CONTACT DEV',
-            ephemeral: true
+            flags: InteractionResponseFlags.Ephemeral
         });
     }
 }
@@ -195,7 +196,7 @@ function createSecurityLogEmbed(user, attempts) {
 export async function handleCodeSubmission(interaction) {
     try {
         // Defer the reply to prevent interaction timeout
-        await interaction.deferReply({ ephemeral: true });
+        await interaction.deferReply({ flags: InteractionResponseFlags.Ephemeral });
 
         const code = interaction.fields.getTextInputValue('accessCode');
         const user = interaction.user;
@@ -329,7 +330,7 @@ export async function handleCodeSubmission(interaction) {
             if (!interaction.replied && !interaction.deferred) {
                 await interaction.reply({
                     content: 'An error occurred while processing your code. Please try again later.',
-                    ephemeral: true
+                    flags: InteractionResponseFlags.Ephemeral
                 });
             } else {
                 await interaction.editReply({

@@ -1,5 +1,5 @@
 import { logger } from './logger.js';
-import { EmbedBuilder } from 'discord.js';
+import { EmbedBuilder, InteractionResponseFlags } from 'discord.js';
 
 // Error types enum
 export const ErrorType = {
@@ -69,11 +69,11 @@ export const handleCommandError = async (error, context) => {
 
     try {
         if (interaction?.replied) {
-            await interaction.followUp({ embeds: [errorEmbed], ephemeral: true });
+            await interaction.followUp({ embeds: [errorEmbed], flags: InteractionResponseFlags.Ephemeral });
         } else if (interaction?.deferred) {
             await interaction.editReply({ embeds: [errorEmbed] });
         } else if (interaction) {
-            await interaction.reply({ embeds: [errorEmbed], ephemeral: true });
+            await interaction.reply({ embeds: [errorEmbed], flags: InteractionResponseFlags.Ephemeral });
         }
     } catch (followUpError) {
         logger.error('Error sending error message:', {
@@ -108,7 +108,7 @@ export const handlePermissionError = async (error, context) => {
     try {
         await interaction.reply({
             embeds: [errorEmbed],
-            ephemeral: true
+            flags: InteractionResponseFlags.Ephemeral
         });
     } catch (replyError) {
         logger.error('Error sending permission error message:', {
@@ -180,7 +180,7 @@ export const handleRateLimitError = async (error, context) => {
     try {
         await interaction.reply({
             embeds: [errorEmbed],
-            ephemeral: true
+            flags: InteractionResponseFlags.Ephemeral
         });
     } catch (replyError) {
         logger.error('Error sending rate limit message:', {

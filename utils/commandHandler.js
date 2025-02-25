@@ -7,6 +7,7 @@ import admin from '../config/admin.js';
 import { readFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { InteractionResponseFlags } from 'discord.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -27,7 +28,7 @@ async function handleSlashCommand(interaction) {
         });
         return await interaction.reply({
             content: 'This command is not implemented yet.',
-            ephemeral: true
+            flags: InteractionResponseFlags.Ephemeral
         });
     }
 
@@ -40,7 +41,7 @@ async function handleSlashCommand(interaction) {
     if (!canUse) {
         return await interaction.reply({
             content: reason || 'You do not have permission to use this command.',
-            ephemeral: true
+            flags: InteractionResponseFlags.Ephemeral
         });
     }
 
@@ -56,7 +57,7 @@ async function handleSlashCommand(interaction) {
         if (!interaction.replied && !interaction.deferred) {
             await interaction.reply({
                 content: 'There was an error executing this command.',
-                ephemeral: true
+                flags: InteractionResponseFlags.Ephemeral
             });
         }
     }
