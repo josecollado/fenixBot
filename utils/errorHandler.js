@@ -1,5 +1,8 @@
 import { logger } from './logger.js';
-import { EmbedBuilder, InteractionResponseFlags } from 'discord.js';
+import { EmbedBuilder } from 'discord.js';
+// Import InteractionResponseFlags properly for CommonJS module
+import pkg from 'discord.js';
+const { InteractionResponseFlags } = pkg;
 
 // Error types enum
 export const ErrorType = {

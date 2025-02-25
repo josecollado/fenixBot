@@ -1,7 +1,9 @@
 import { logger } from '../utils/logger.js';
 import { slashCommands } from '../commands/slashCommands.js';
 import { createBouncerMessage } from '../actions/bouncer.js';
-import { InteractionResponseFlags } from 'discord.js';
+// Import InteractionResponseFlags properly for CommonJS module
+import pkg from 'discord.js';
+const { InteractionResponseFlags } = pkg;
 
 // Ping command handler
 const handlePing = async (interaction) => {

@@ -5,9 +5,10 @@ import {
     EmbedBuilder,
     ModalBuilder,
     TextInputBuilder,
-    TextInputStyle,
-    InteractionResponseFlags
+    TextInputStyle
 } from 'discord.js';
+import pkg from 'discord.js';
+const { InteractionResponseFlags } = pkg;
 import { readFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';

@@ -7,7 +7,9 @@ import admin from '../config/admin.js';
 import { readFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { InteractionResponseFlags } from 'discord.js';
+// Import InteractionResponseFlags properly for CommonJS module
+import pkg from 'discord.js';
+const { InteractionResponseFlags } = pkg;
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
