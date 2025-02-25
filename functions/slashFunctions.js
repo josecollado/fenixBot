@@ -1,9 +1,7 @@
 import { logger } from '../utils/logger.js';
 import { slashCommands } from '../commands/slashCommands.js';
 import { createBouncerMessage } from '../actions/bouncer.js';
-// Import InteractionResponseFlags properly for CommonJS module
-import pkg from 'discord.js';
-const { InteractionResponseFlags } = pkg;
+import { MessageFlags } from 'discord.js';
 
 // Ping command handler
 const handlePing = async (interaction) => {
@@ -26,12 +24,12 @@ const handleBan = async (interaction) => {
     if (!interaction.guild.members.me.permissions.has('BanMembers')) {
         return await interaction.reply({
             content: 'I do not have permission to ban members.',
-            flags: InteractionResponseFlags.Ephemeral
+            flags: MessageFlags.Ephemeral
         });
     }
 
     try {
-        await interaction.deferReply({ flags: InteractionResponseFlags.Ephemeral });
+        await interaction.deferReply({ flags: MessageFlags.Ephemeral });
         await interaction.guild.members.ban(user, { reason });
         await interaction.editReply({
             content: `Successfully banned ${user.tag}\nReason: ${reason}`
@@ -65,12 +63,12 @@ const handleKick = async (interaction) => {
     if (!interaction.guild.members.me.permissions.has('KickMembers')) {
         return await interaction.reply({
             content: 'I do not have permission to kick members.',
-            flags: InteractionResponseFlags.Ephemeral
+            flags: MessageFlags.Ephemeral
         });
     }
 
     try {
-        await interaction.deferReply({ flags: InteractionResponseFlags.Ephemeral });
+        await interaction.deferReply({ flags: MessageFlags.Ephemeral });
         await member.kick(reason);
         await interaction.editReply({
             content: `Successfully kicked ${user.tag}\nReason: ${reason}`
@@ -99,12 +97,12 @@ const handleTimeout = async (interaction) => {
     if (!interaction.guild.members.me.permissions.has('ModerateMembers')) {
         return await interaction.reply({
             content: 'I do not have permission to timeout members.',
-            flags: InteractionResponseFlags.Ephemeral
+            flags: MessageFlags.Ephemeral
         });
     }
 
     try {
-        await interaction.deferReply({ flags: InteractionResponseFlags.Ephemeral });
+        await interaction.deferReply({ flags: MessageFlags.Ephemeral });
         await member.timeout(duration * 60 * 1000, reason);
         await interaction.editReply({
             content: `Successfully timed out ${user.tag} for ${duration} minutes\nReason: ${reason}`
@@ -132,7 +130,7 @@ const handleUnban = async (interaction) => {
     if (!interaction.guild.members.me.permissions.has('BanMembers')) {
         return await interaction.reply({
             content: 'I do not have permission to unban members.',
-            flags: InteractionResponseFlags.Ephemeral
+            flags: MessageFlags.Ephemeral
         });
     }
 
@@ -140,7 +138,7 @@ const handleUnban = async (interaction) => {
         await interaction.guild.members.unban(userId, reason);
         await interaction.reply({
             content: `Successfully unbanned user with ID: ${userId}\nReason: ${reason}`,
-            flags: InteractionResponseFlags.Ephemeral
+            flags: MessageFlags.Ephemeral
         });
         
         logger.info('User unbanned', {
@@ -152,7 +150,7 @@ const handleUnban = async (interaction) => {
         logger.error('Unban command error:', { error: error.message });
         await interaction.reply({
             content: 'Failed to unban user. Make sure the ID is valid and the user is banned.',
-            flags: InteractionResponseFlags.Ephemeral
+            flags: MessageFlags.Ephemeral
         });
     }
 };
@@ -193,7 +191,7 @@ const handleUntimeout = async (interaction) => {
     if (!interaction.guild.members.me.permissions.has('ModerateMembers')) {
         return await interaction.reply({
             content: 'I do not have permission to manage timeouts.',
-            flags: InteractionResponseFlags.Ephemeral
+            flags: MessageFlags.Ephemeral
         });
     }
 
@@ -201,7 +199,7 @@ const handleUntimeout = async (interaction) => {
         await member.timeout(null, reason);
         await interaction.reply({
             content: `Successfully removed timeout from ${user.tag}\nReason: ${reason}`,
-            flags: InteractionResponseFlags.Ephemeral
+            flags: MessageFlags.Ephemeral
         });
         
         logger.info('Timeout removed', {
@@ -213,7 +211,7 @@ const handleUntimeout = async (interaction) => {
         logger.error('Untimeout command error:', { error: error.message });
         await interaction.reply({
             content: 'Failed to remove timeout. Make sure I have the correct permissions and the user is moderatable.',
-            flags: InteractionResponseFlags.Ephemeral
+            flags: MessageFlags.Ephemeral
         });
     }
 };
@@ -228,7 +226,7 @@ const handleWarn = async (interaction) => {
     try {
         await interaction.reply({
             content: `Warning issued to ${user.tag}\nReason: ${reason}`,
-            flags: InteractionResponseFlags.Ephemeral
+            flags: MessageFlags.Ephemeral
         });
         
         logger.info('User warned', {
@@ -240,7 +238,7 @@ const handleWarn = async (interaction) => {
         logger.error('Warn command error:', { error: error.message });
         await interaction.reply({
             content: 'Failed to warn user.',
-            flags: InteractionResponseFlags.Ephemeral
+            flags: MessageFlags.Ephemeral
         });
     }
 };
@@ -254,13 +252,13 @@ const handleWarnings = async (interaction) => {
     try {
         await interaction.reply({
             content: `Warnings for ${user.tag} will be displayed here once the warning system is implemented.`,
-            flags: InteractionResponseFlags.Ephemeral
+            flags: MessageFlags.Ephemeral
         });
     } catch (error) {
         logger.error('Warnings command error:', { error: error.message });
         await interaction.reply({
             content: 'Failed to retrieve warnings.',
-            flags: InteractionResponseFlags.Ephemeral
+            flags: MessageFlags.Ephemeral
         });
     }
 };
@@ -273,7 +271,7 @@ const handleHelp = async (interaction) => {
 
     await interaction.reply({
         content: `Here are all my commands:\n\n${commandList}`,
-        flags: InteractionResponseFlags.Ephemeral
+        flags: MessageFlags.Ephemeral
     });
 };
 
@@ -285,7 +283,7 @@ const handleBuildbouncer = async (interaction) => {
         
         await interaction.reply({
             content: 'Bouncer has been created!',
-            flags: InteractionResponseFlags.Ephemeral
+            flags: MessageFlags.Ephemeral
         });
         
         logger.info('Bouncer created', {
@@ -296,7 +294,7 @@ const handleBuildbouncer = async (interaction) => {
         logger.error('Bouncer creation error:', { error: error.message });
         await interaction.reply({
             content: 'Failed to create bouncer. Make sure I have the correct permissions in this channel.',
-            flags: InteractionResponseFlags.Ephemeral
+            flags: MessageFlags.Ephemeral
         });
     }
 };

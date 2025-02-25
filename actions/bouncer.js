@@ -5,10 +5,9 @@ import {
     EmbedBuilder,
     ModalBuilder,
     TextInputBuilder,
-    TextInputStyle
+    TextInputStyle,
+    MessageFlags
 } from 'discord.js';
-import pkg from 'discord.js';
-const { InteractionResponseFlags } = pkg;
 import { readFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -137,7 +136,7 @@ export async function handleBouncerButton(interaction) {
                 const suitsResult = await assignRoles(interaction.member, ['SUITS']);
                 await interaction.reply({
                     content: suitsResult.message,
-                    flags: InteractionResponseFlags.Ephemeral
+                    flags: MessageFlags.Ephemeral
                 });
                 break;
 
@@ -145,7 +144,7 @@ export async function handleBouncerButton(interaction) {
                 const cryptoResult = await assignRoles(interaction.member, ['CRYPTO']);
                 await interaction.reply({
                     content: cryptoResult.message,
-                    flags: InteractionResponseFlags.Ephemeral
+                    flags: MessageFlags.Ephemeral
                 });
                 break;
 
@@ -156,14 +155,14 @@ export async function handleBouncerButton(interaction) {
             default:
                 await interaction.reply({
                     content: 'ERROR CONTACT DEV',
-                    flags: InteractionResponseFlags.Ephemeral
+                    flags: MessageFlags.Ephemeral
                 });
         }
     } catch (error) {
         logger.error('Button interaction error:', { error: error.message });
         await interaction.reply({
             content: 'ERROR CONTACT DEV',
-            flags: InteractionResponseFlags.Ephemeral
+            flags: MessageFlags.Ephemeral
         });
     }
 }
@@ -197,7 +196,7 @@ function createSecurityLogEmbed(user, attempts) {
 export async function handleCodeSubmission(interaction) {
     try {
         // Defer the reply to prevent interaction timeout
-        await interaction.deferReply({ flags: InteractionResponseFlags.Ephemeral });
+        await interaction.deferReply({ flags: MessageFlags.Ephemeral });
 
         const code = interaction.fields.getTextInputValue('accessCode');
         const user = interaction.user;
@@ -331,7 +330,7 @@ export async function handleCodeSubmission(interaction) {
             if (!interaction.replied && !interaction.deferred) {
                 await interaction.reply({
                     content: 'An error occurred while processing your code. Please try again later.',
-                    flags: InteractionResponseFlags.Ephemeral
+                    flags: MessageFlags.Ephemeral
                 });
             } else {
                 await interaction.editReply({
